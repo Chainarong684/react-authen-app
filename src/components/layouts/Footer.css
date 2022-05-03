@@ -1,0 +1,25 @@
+.main-footer {
+    height: 60px;
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #001529;
+}
+
+.footer-left {
+    color: #fff;
+}
+
+.footer-right {
+}
+
+.footer-menu {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+}
+
+.footer-menu li {
+    margin: 0 10px;
+}

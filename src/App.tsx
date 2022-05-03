@@ -14,13 +14,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}>
         <Header />
-        <Content>
+        <Content style={{ backgroundColor: '#add8e6' }}>
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </Content>
         <Footer />
