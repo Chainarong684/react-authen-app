@@ -1,32 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
-import { Menu, Dropdown, Avatar } from 'antd'
+
+import UserMenu from '../UserMenu'
 
 import './Header.css'
 
 const Header = () => {
-  const dropDownOption = (
-    <Menu
-      items={[
-        {
-          key: 1,
-          label: 'Profile',
-          icon: <UserOutlined />,
-        },
-        {
-          key: 2,
-          label: 'Logut',
-          icon: <LogoutOutlined />,
-        },
-      ]}
-    />
-  )
-
   return (
     <div className="header-box">
       <div className="logo-box">
-        <span>Authentication App</span>
+        <span>Management System</span>
       </div>
       <div className="nav-box">
         <ul className="nav-menu">
@@ -46,9 +29,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Dropdown overlay={dropDownOption}>
-              <Avatar style={{ color: '#fff' }} icon={<UserOutlined />} />
-            </Dropdown>
+            <UserMenu />
           </li>
         </ul>
       </div>
