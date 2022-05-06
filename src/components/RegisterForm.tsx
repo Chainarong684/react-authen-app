@@ -1,7 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
-import { Form, Input, Button, Select, DatePicker } from 'antd'
+import {
+  CheckOutlined,
+  CloseOutlined,
+  LockOutlined,
+  MailOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
+import { Form, Input, Button, Select, DatePicker, Switch, Radio } from 'antd'
+import moment from 'moment'
 
 const RegisterForm = () => {
   const [form] = Form.useForm()
@@ -25,7 +32,12 @@ const RegisterForm = () => {
       {...formItemLayout}
       name="registerForm"
       onFinish={handleSubmitForm}
-      initialValues={{ gender: 'Male' }}
+      initialValues={{
+        role: 'User',
+        notify: true,
+        dob: moment(),
+        gender: 'male',
+      }}
       autoComplete="off"
       scrollToFirstError
     >
@@ -67,12 +79,6 @@ const RegisterForm = () => {
           type="email"
         />
       </Form.Item>
-      <Form.Item name="gender" label="Gender">
-        <Select>
-          <Select.Option value="Male">Male</Select.Option>
-          <Select.Option value="Female">Female</Select.Option>
-        </Select>
-      </Form.Item>
       <Form.Item
         name="dob"
         label="Date of birth"
@@ -82,6 +88,26 @@ const RegisterForm = () => {
           format={'DD/MM/YYYY'}
           placeholder="Date of birth"
           style={{ width: '100%' }}
+        />
+      </Form.Item>
+      <Form.Item name="gender" label="Gender">
+        <Radio.Group>
+          <Radio value={'male'}>Male</Radio>
+          <Radio value={'female'}>Female</Radio>
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item name="role" label="Role">
+        <Select>
+          <Select.Option value="user">User</Select.Option>
+          <Select.Option value="staff">Staff</Select.Option>
+          <Select.Option value="admin">Admin</Select.Option>
+        </Select>
+      </Form.Item>
+      <Form.Item name="notify" label="Notification" valuePropName="checked">
+        <Switch
+          checkedChildren={<CheckOutlined />}
+          unCheckedChildren={<CloseOutlined />}
+          defaultChecked
         />
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 8 }}>
