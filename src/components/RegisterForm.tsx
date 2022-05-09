@@ -7,7 +7,16 @@ import {
   MailOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-import { Form, Input, Button, Select, DatePicker, Switch, Radio } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  DatePicker,
+  Switch,
+  Radio,
+  Space,
+} from 'antd'
 import moment from 'moment'
 
 const RegisterForm = () => {
@@ -54,6 +63,7 @@ const RegisterForm = () => {
       <Form.Item
         label="Password"
         name="password"
+        hasFeedback
         rules={[
           {
             required: true,
@@ -62,10 +72,35 @@ const RegisterForm = () => {
           },
         ]}
       >
-        <Input
+        <Input.Password
           prefix={<LockOutlined style={{ color: '#808080' }} />}
           placeholder="Password"
-          type="password"
+        />
+      </Form.Item>
+      <Form.Item
+        name="cpassword"
+        label="Re-Password"
+        dependencies={['password']}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            min: 6,
+            message: 'Please fill confirm password',
+          },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (getFieldValue('password') === value) {
+                return Promise.resolve()
+              }
+              return Promise.reject(new Error('Passwords that do not match!'))
+            },
+          }),
+        ]}
+      >
+        <Input.Password
+          prefix={<LockOutlined style={{ color: '#808080' }} />}
+          placeholder="Confirm Password"
         />
       </Form.Item>
       <Form.Item
@@ -118,7 +153,10 @@ const RegisterForm = () => {
           Submit
         </Button>
       </Form.Item>
-      <Link to="/login">Already have an account ?</Link>
+      <Space direction="vertical">
+        <Link to="/login">Already have an account ?</Link>
+        <Link to="/new-password">Forgot password ?</Link>
+      </Space>
     </Form>
   )
 }

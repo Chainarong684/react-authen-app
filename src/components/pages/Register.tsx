@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Image, Divider } from 'antd'
 
-import coverBg from '../../assets/images/celebrate-bg.jpg'
+import coverBg from '../../assets/images/cover-register-bg.jpg'
 import RegisterForm from '../RegisterForm'
 
 const Register = () => {

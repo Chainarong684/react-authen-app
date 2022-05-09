@@ -9,6 +9,7 @@ import Register from './components/pages/Register'
 import Header from './components/layouts/Header'
 import Footer from './components/layouts/Footer'
 import UserProfile from './components/pages/UserProfile'
+import NewPassword from './components/pages/NewPassword'
 
 const App = () => {
   const { Content } = Layout
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/new-password" element={<NewPassword />} />
             <Route path="/user/:id" element={<UserProfile />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
