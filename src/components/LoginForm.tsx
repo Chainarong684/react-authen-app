@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Form, Input, Button, Space, Checkbox } from 'antd'
 
 const LoginForm = () => {
+  const [loginData, setLoginData] = useState({
+    username: '',
+    password: '',
+  })
+
   const [form] = Form.useForm()
 
   const formItemLayout = {
@@ -11,8 +16,18 @@ const LoginForm = () => {
     wrapperCol: { span: 14 },
   }
 
-  const handleSubmitForm = (value: any) => {
-    console.log(value)
+  const handleInputChange = (e: any) => {
+    const { target } = e
+    const { name, value } = target
+
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    })
+  }
+
+  const handleSubmitForm = () => {
+    console.log(loginData)
   }
 
   return (
@@ -30,8 +45,10 @@ const LoginForm = () => {
         rules={[{ required: true, message: 'Please fill username' }]}
       >
         <Input
-          prefix={<UserOutlined style={{ color: '#808080' }} />}
           placeholder="Username"
+          name="username"
+          prefix={<UserOutlined style={{ color: '#808080' }} />}
+          onChange={handleInputChange}
         />
       </Form.Item>
       <Form.Item
@@ -46,8 +63,10 @@ const LoginForm = () => {
         ]}
       >
         <Input.Password
-          prefix={<LockOutlined style={{ color: '#808080' }} />}
           placeholder="Password"
+          name="password"
+          prefix={<LockOutlined style={{ color: '#808080' }} />}
+          onChange={handleInputChange}
         />
       </Form.Item>
       <Form.Item
