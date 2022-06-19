@@ -7,6 +7,7 @@ const LoginForm = () => {
   const [loginData, setLoginData] = useState({
     username: '',
     password: '',
+    remember: localStorage.getItem('remember') === 'true' ? true : false,
   })
 
   const [form] = Form.useForm()
@@ -18,7 +19,8 @@ const LoginForm = () => {
 
   const handleInputChange = (e: any) => {
     const { target } = e
-    const { name, value } = target
+    const { name } = target
+    const value = name === 'remember' ? target.checked : target.value
 
     setLoginData({
       ...loginData,
@@ -28,6 +30,11 @@ const LoginForm = () => {
 
   const handleSubmitForm = () => {
     console.log(loginData)
+    if (loginData.remember) {
+      localStorage.setItem('remember', 'true')
+    } else {
+      localStorage.setItem('remember', 'false')
+    }
   }
 
   return (
@@ -36,6 +43,7 @@ const LoginForm = () => {
       {...formItemLayout}
       name="loginForm"
       onFinish={handleSubmitForm}
+      initialValues={{ remember: loginData.remember }}
       autoComplete="off"
       scrollToFirstError
     >
@@ -74,7 +82,9 @@ const LoginForm = () => {
         valuePropName="checked"
         wrapperCol={{ offset: 8 }}
       >
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox name="remember" onChange={handleInputChange}>
+          Remember me
+        </Checkbox>
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 8 }}>
         <Button type="primary" htmlType="submit" style={{ marginLeft: 8 }}>
