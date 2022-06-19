@@ -20,15 +20,18 @@ import {
 import moment from 'moment'
 
 const RegisterForm = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [cpassword, setCpassword] = useState('')
-  const [email, setEmail] = useState('')
-  const [dob, setDob] = useState(moment())
-  const [gender, setGender] = useState('male')
-  const [role, setRole] = useState('user')
-  const [notify, setNotify] = useState<boolean>()
+  const initialRegisterData = {
+    username: '',
+    password: '',
+    cpassword: '',
+    email: '',
+    dob: moment(),
+    gender: 'male',
+    role: 'user',
+    notify: true,
+  }
 
+  const [registerData, setRegisterData] = useState(initialRegisterData)
   const [form] = Form.useForm()
 
   const formItemLayout = {
@@ -36,27 +39,23 @@ const RegisterForm = () => {
     wrapperCol: { span: 14 },
   }
 
-  // const handleInputChange = (e: any) => {
-  //   const { target } = e
-  //   const { name } = target
-  // }
+  const handleInputChange = (e: any) => {
+    const { target } = e
+    const { name, value } = target
+
+    setRegisterData({
+      ...registerData,
+      [name]: value,
+    })
+  }
 
   const handleSubmitForm = () => {
-    const data = {
-      username,
-      password,
-      cpassword,
-      email,
-      dob,
-      gender,
-      role,
-      notify,
-    }
-    console.log(data)
+    console.log(registerData)
   }
 
   const handleResetForm = () => {
     form.resetFields()
+    setRegisterData(initialRegisterData)
   }
 
   return (
@@ -82,7 +81,8 @@ const RegisterForm = () => {
         <Input
           prefix={<UserOutlined style={{ color: '#808080' }} />}
           placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          onChange={handleInputChange}
         />
       </Form.Item>
       <Form.Item
@@ -100,7 +100,8 @@ const RegisterForm = () => {
         <Input.Password
           prefix={<LockOutlined style={{ color: '#808080' }} />}
           placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          onChange={handleInputChange}
         />
       </Form.Item>
       <Form.Item
@@ -127,7 +128,8 @@ const RegisterForm = () => {
         <Input.Password
           prefix={<LockOutlined style={{ color: '#808080' }} />}
           placeholder="Confirm Password"
-          onChange={(e) => setCpassword(e.target.value)}
+          name="cpassword"
+          onChange={handleInputChange}
         />
       </Form.Item>
       <Form.Item
@@ -139,7 +141,8 @@ const RegisterForm = () => {
           prefix={<MailOutlined style={{ color: '#808080' }} />}
           placeholder="Example@test.com"
           type="email"
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          onChange={handleInputChange}
         />
       </Form.Item>
       <Form.Item
@@ -151,19 +154,17 @@ const RegisterForm = () => {
           format={'DD/MM/YYYY'}
           placeholder="Date of birth"
           style={{ width: '100%' }}
-          onChange={(e) => {
-            if (e) setDob(e)
-          }}
+          onChange={(e) => setRegisterData({ ...registerData, dob: e! })}
         />
       </Form.Item>
       <Form.Item name="gender" label="Gender">
-        <Radio.Group onChange={(e) => setGender(e.target.value)}>
+        <Radio.Group name="gender" onChange={handleInputChange}>
           <Radio value={'male'}>Male</Radio>
           <Radio value={'female'}>Female</Radio>
         </Radio.Group>
       </Form.Item>
       <Form.Item name="role" label="Role">
-        <Select onChange={(e) => setRole(e)}>
+        <Select onChange={(e) => setRegisterData({ ...registerData, role: e })}>
           <Select.Option value="user">User</Select.Option>
           <Select.Option value="staff">Staff</Select.Option>
           <Select.Option value="admin">Admin</Select.Option>
@@ -174,7 +175,12 @@ const RegisterForm = () => {
           checkedChildren={<CheckOutlined />}
           unCheckedChildren={<CloseOutlined />}
           defaultChecked
-          onChange={(e) => setNotify(e)}
+          onChange={(e) =>
+            setRegisterData({
+              ...registerData,
+              notify: e,
+            })
+          }
         />
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 8 }}>
